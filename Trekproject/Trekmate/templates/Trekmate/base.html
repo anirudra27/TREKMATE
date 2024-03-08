@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{% block title %}Trekmate{% endblock %}</title>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <!-- nav -->
+        <nav class="py-md-4 py-3 d-lg-flex">
+            <div id="logo">
+                <h1 class="mt-md-0 mt-2"> <a href="{% url 'home' %}"><span class="fa fa-map-signs"></span> TREK MATE </a></h1>
+            </div>
+            <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+            <input type="checkbox" id="drop" />
+            <ul class="menu ml-auto mt-1">
+                <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                <li class=""><a href="{% url 'shop' %}">Shop</a></li>
+                <li class=""><a href="{% url 'destination' %}">Destination</a></li>
+                <li class=""><a href="{% url 'post_list' %}">Blog</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'user-logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'mylogin' %}?next={{ request.path }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- //nav -->
+    </div>
+</header>
+
+<!-- content block -->
+{% block content %}
+{% endblock %}
+
+<!--footer -->
+<footer>
+    <section class="footer footer_w3layouts_section_1its py-5">
+        <div class="container py-lg-4 py-3">
+            <div class="row footer-top">
+                <div class="col-lg-3 col-sm-6 footer-grid_section_1its_w3">
+                    <div class="footer-title">
+                        <h3>Address</h3>
+                    </div>
+                    <div class="footer-text">
+                        <p>Location : Kathmandu, Nepal</p>
+                        <p>Phone : +977 9863651546</p>
+                        <p>Email : <a href="#">info@example.com</a></p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 footer-grid_section mt-sm-0 mt-4">
+                    <div class="footer-title">
+                        <h3>About Us</h3>
+                    </div>
+                    <div class="footer-text">
+                        <p>Explore trekking destination with us. Enjoy the best plan for your next trek!</p>
+                    </div>
+                    <ul class="social_section_1info">
+                        <li class="mb-2 facebook"><a href="#"><span class="fa fa-facebook"></span></a></li>
+                        <li class="mb-2 twitter"><a href="#"><span class="fa fa-twitter"></span></a></li>
+                        <li class="google"><a href="#"><span class="fa fa-google-plus"></span></a></li>
+                        <li class="linkedin"><a href="#"><span class="fa fa-linkedin"></span></a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+                    <div class="footer-title">
+                        <h3>Trek</h3>
+                    </div>
+                    <div class="row">
+                        <ul class="col-6 links">
+                            <li><a href="#choose" class="scroll">Shey Phoksundo</a></li>
+                            <li><a href="#overview" class="scroll">Mardi Base Camp </a></li>
+                            <li><a href="#pricing" class="scroll">Panch Pokhari</a></li>
+                            <li><a href="#faq" class="scroll"> Everest Base Camp</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 mt-lg-0 mt-4 footer-grid_section_1its_w3">
+                    <div class="footer-title">
+                        <h3>Sign Up</h3>
+                    </div>
+                    <div class="footer-text">
+                        <p>By Signing up you can access to more features.</p>
+                        <btn class="footer-btn">Sign Up</btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </footer>
+    <!-- //footer -->
+
+</body>
+</html>

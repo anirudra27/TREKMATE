@@ -1,0 +1,18 @@
+{% extends 'Trekmate/base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <main class="container">
+            <h2>Welcome to our shop!</h2>
+            <div class="product">
+                <h3>Product Name</h3>
+                <p>Description of the product goes here...</p>
+                <p>Price: $XX.XX</p>
+                <button>Add to Cart</button>
+            </div>
+            <!-- Add more products here if needed -->
+        </main>
+    {% else %}
+        <p>Please <a href="{% url 'mylogin' %}?next={{ request.path }}">log in</a> to view this page.</p>
+    {% endif %}
+{% endblock %}

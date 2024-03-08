@@ -1,0 +1,103 @@
+{% extends 'Trekmate/base.html' %}
+
+{% block content %}
+<section class="banner_inner" id="home">
+    <div class="banner_inner_overlay">
+		
+    </div>
+	
+<h3 class="heading text-capitalize text-center"> Popular Destinations</h3>
+
+<div class="text-center">
+    <section class="destinations py-5" id="destinations">
+        <div class="container py-xl-5 py-lg-3">
+            <p class="text mt-2 mb-5 text-center">Trekkers Favorite Destinations</p>
+            <div class="row inner-sec-w3layouts-w3pvt-lauinfo">
+                <div class="col-md-6 col-sm-12 destinations-grids text-center">
+                    <div class="destination-card">
+                        <div class="image-position position-relative">
+                            <img src="../../images/paanch.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="destinations-info">
+                            <h4 class="destination mb-3">Shey Phoksundo</h4>
+                            <p>Description of Shey Phoksundo.</p>
+                            <a href="booking.html" class="btn btn-primary">Look Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 destinations-grids text-center">
+                    <div class="destination-card">
+                        <div class="image-position position-relative">
+                            <img src="../../../images/ebc.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="destinations-info">
+                            <h4 class="destination mb-3">EBC</h4>
+                            <p>Description of EBC.</p>
+                            <a href="booking.html" class="btn btn-primary">Look Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row inner-sec-w3layouts-w3pvt-lauinfo">
+                <div class="col-md-6 col-sm-12 destinations-grids text-center">
+                    <div class="destination-card">
+                        <div class="image-position position-relative">
+                            <img src="../../../images/paanch pokhari.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="destinations-info">
+                            <h4 class="destination mb-3">Tsho Rolpa</h4>
+                            <p>Description of Tsho Rolpa.</p>
+                            <a href="booking.html" class="btn btn-primary">Look Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 destinations-grids text-center">
+                    <div class="destination-card">
+                        <div class="image-position position-relative">
+                            <img src="../../../images/mardi.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="destinations-info">
+                            <h4 class="destination mb-3">Mardi Base Camp</h4>
+                            <p>Description of Mardi Base Camp.</p>
+                            <a href="booking.html" class="btn btn-primary">Look Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</section>
+
+<style>
+	.destinations-grids {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.destinations-grids .destination-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.destinations-grids .destination-card .image-position {
+    margin-bottom: 15px;
+}
+
+.destinations-grids .destination-card .destinations-info {
+    text-align: center;
+}
+
+.destinations-grids .destination-card .btn {
+    margin-top: 15px;
+}
+
+</style>
+<!-- //destinations -->
+{% endblock %}
+
+
