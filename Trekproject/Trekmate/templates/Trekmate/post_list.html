@@ -1,54 +1,29 @@
 {% extends 'Trekmate/base.html' %}
-
+{% load static %}
 {% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'post_list.css' %}">
+</head>
 <main class="container">
-    <!-- Your blog content goes here -->
-    {% for post in posts %}
-    <div class="post">
-        <h2 class="post-title">{{ post.title }}</h2>
-        <p class="post-content">{{ post.content }}</p>
-        <p class="post-author">Author: {{ post.author }}</p>
-        <p>Created at: {{ post.created_at }}</p>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{% static 'images/1.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.short_description }}</p> 
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Author: {{ post.author }}</small>
+                    <br>
+                    <small class="text-muted">Posted at: {{ post.created_at }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </main>
 {% endblock %}
 
-<style>
-    .post {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
 
-.post-title {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.post-thumbnail img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.post-content {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
-
-.post-author {
-    font-style: italic;
-    margin-bottom: 5px;
-}
-
-.post-created-at {
-    color: #999;
-    font-size: 14px;
-}
-
-</style>

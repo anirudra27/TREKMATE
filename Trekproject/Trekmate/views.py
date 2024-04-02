@@ -2,8 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import CreateUserForm, LoginForm, PostForm
-from .models import Post
+from .forms import Post
+from .forms import CustomUserCreationForm
+from .models import Itinerary
+
+from django.contrib.auth.forms import  AuthenticationForm
+from .forms import PostForm
 
 def homepage(request):
     return render(request, 'Trekmate/home.html')
@@ -18,7 +22,7 @@ def shop(request):
 
 @login_required
 def post_list(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all() 
     return render(request, 'Trekmate/post_list.html', {'posts': posts})
 
 @login_required
@@ -37,33 +41,38 @@ def create_post(request):
         form = PostForm()
     return render(request, 'Trekmate/create_post.html', {'form': form})
 
+from .forms import CustomUserCreationForm
+
 def register(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    
-    form = CreateUserForm()
     if request.method == "POST":
-        form = CreateUserForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Account created successfully. Please log in.')
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created successfully for {username}. Please log in.')
             return redirect("mylogin")
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field.capitalize()}: {error}')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'Trekmate/register.html', {'form': form})
 
-    context = {'registerform': form}
-    return render(request, 'Trekmate/register.html', context=context)
+
 
 def mylogin(request):
     if request.user.is_authenticated:
         return redirect('home')
 
-    form = LoginForm()
+    form = AuthenticationForm()
     if request.method == "POST":
-        form = LoginForm(request, data=request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
 
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(username=username, password=password)
 
             if user is not None:
                 login(request, user)
@@ -74,9 +83,13 @@ def mylogin(request):
                     return redirect("home")
             else:
                 messages.error(request, 'Invalid username or password')
+        else:
+            messages.error(request, 'Invalid username or password')
 
     context = {'loginform': form}
     return render(request, 'Trekmate/mylogin.html', context=context)
+
+
 
 def user_logout(request):
     logout(request)
@@ -85,3 +98,7 @@ def user_logout(request):
 @login_required
 def dashboard(request):
     return render(request, 'Trekmate/dashboard.html')
+
+def itinerary(request):
+    itineraries = Itinerary.objects.all()  
+    return render(request, 'Trekmate/itinerary.html', {'itineraries': itineraries})

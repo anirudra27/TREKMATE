@@ -1,0 +1,110 @@
+{% extends 'Trekmate/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'itinerary.css' %}">
+</head>
+<div class="container">
+    <h1 class="heading">Itinerary Details</h1>
+    <div class="itinerary-tabs">
+        <button class="tablinks active" onclick="openTab(event, 'itinerary')">Itinerary</button>
+        <button class="tablinks" onclick="openTab(event, 'detail-itinerary')">Detail Itinerary</button>
+    </div>
+    <div id="itinerary" class="tabcontent">
+        {% for itinerary in itineraries %}
+        <div class="itinerary-card">
+            <img src="{{ itinerary.map_image.url }}" class="itinerary-img" alt="Map Image">
+            <div class="itinerary-info">
+                <h2 class="destination">{{ itinerary.destination }}</h2>
+                <p><strong>Location:</strong> {{ itinerary.location }}</p>
+                <p><strong>Season:</strong> {{ itinerary.season }}</p>
+                <p><strong>Duration:</strong> {{ itinerary.duration }}</p>
+                <p><strong>Itinerary:</strong></p>
+                <p>{{ itinerary.itinerary }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="detail-itinerary" class="tabcontent" style="display: none;">
+        {% for itinerary in itineraries %}
+        <div class="itinerary-card">
+            <img src="{{ itinerary.map_image.url }}" class="itinerary-img" alt="Map Image">
+            <div class="itinerary-info">
+                <h2 class="destination">{{ itinerary.destination }}</h2>
+                <p><strong>Location:</strong> {{ itinerary.location }}</p>
+                <p><strong>Season:</strong> {{ itinerary.season }}</p>
+                <p><strong>Duration:</strong> {{ itinerary.duration }}</p>
+                <p><strong>Detail Itinerary:</strong></p>
+                <p>{{ itinerary.detail_itinerary }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+<style>
+    /* Style the tab buttons */
+.itinerary-tabs {
+    overflow: hidden;
+}
+
+.tablinks {
+    background-color: #f2f2f2;
+    float: left;
+    border: 1px solid #ccc;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: 0.3s;
+}
+
+.tablinks:hover {
+    background-color: #ddd;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 20px;
+}
+
+/* Add an active class to the current tab */
+.active {
+    background-color: #ccc;
+}
+.itinerary-info {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    font-family: 'Times New Roman';
+    
+}
+
+.destination {
+    margin-top: 0;
+}
+
+.info {
+    margin: 5px 0;
+    line-height: 1.5;
+}
+
+</style>
+{% endblock %}

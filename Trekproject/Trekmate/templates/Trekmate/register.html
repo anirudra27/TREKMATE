@@ -1,15 +1,126 @@
-{% load static %}
-<html>
-    <h1>Register now</h1>
-    
-    <form method="POST" autocomplete="off">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
 
-        {% csrf_token %}
-        {{registerform.as_p}}
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-        <input type="submit" value="Register"/>
+        .title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
+        .content {
+            padding: 20px;
+        }
 
-    </form>
+        .input-box {
+            margin-bottom: 20px;
+        }
 
-</html>
+        .input-box .details {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-box input[type="text"],
+        .input-box input[type="email"],
+        .input-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .button input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .errors {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Registration</div>
+        <div class="content">
+            <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="errors">
+                        <ul>
+                            {% for field, error_list in form.errors.items %}
+                                {% for error in error_list %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="input-box">
+                    <span class="details">First Name</span>
+                    {{ form.first_name }}
+                </div>
+                <div class="input-box">
+                    <span class="details">Last Name</span>
+                    {{ form.last_name }}
+                </div>
+                <div class="input-box">
+                    <span class="details">Username</span>
+                    {{ form.username }}
+                </div>
+                <div class="input-box">
+                    <span class="details">Email</span>
+                    {{ form.email }}
+                </div>
+                <div class="input-box">
+                    <span class="details">Phone Number</span>
+                    {{ form.phone_number }}
+                </div>
+                <div class="input-box">
+                    <span class="details">Password</span>
+                    {{ form.password1 }}
+                </div>
+                <div class="input-box">
+                    <span class="details">Confirm Password</span>
+                    {{ form.password2 }}
+                </div>
+                <div class="button">
+                    <input type="submit" value="Register">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

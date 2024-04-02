@@ -1,45 +1,25 @@
-body {
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-  }
-.container {
-    margin-top: 60px; /* Adjust this value based on your navbar height */
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
 }
-  header {
-	background-color: white;
-	color: #fff;
-	padding: 20px;
-	text-align: center;
-  }
-  
-  .blog-main {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	margin: 20px;
-  }
-  
-  .post-blog {
-	background-color: #f2f2f2;
-	border: 1px solid #ddd;
-	margin-bottom: 20px;
-	padding: 20px;
-	width: calc(33.333% - 20px);
-  }
-  
-  .post-content {
-	margin-top: 0;
-  }
-  
-  @media (max-width: 960px) {
-	.post {
-	  width: calc(50% - 20px);
-	}
-  }
-  
-  @media (max-width: 640px) {
-	.post {
-	  width: 100%;
-	}
-  }
+
+.card-img-top {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.card-footer {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.75rem 1.25rem;
+    text-align: right;
+}
