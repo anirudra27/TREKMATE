@@ -1,0 +1,122 @@
+{% extends 'Trekmate/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'itinerary.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .itinerary-container {
+            max-width: 100%;
+            padding: 20px;
+            margin-top: 70px; /* Adjusted margin to prevent overlay on navbar */
+            margin-bottom: 50px; /* Adjusted margin to prevent overlay on footer */
+        }
+        .destination {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .itinerary-info {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .itinerary-info p {
+            margin: 0 10px;
+        }
+        .itinerary-img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .itinerary-tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tablinks {
+            background-color: #ddd;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .tablinks.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .tabcontent {
+            display: none;
+            margin-top: 20px;
+        }
+        .itinerary-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<div class="itinerary-container">
+    <h2 style="text-align: center; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;">{{ itinerary.destination }}</h2>
+    <div class="itinerary-info">
+        <p><strong>Location:</strong> {{ itinerary.location }}</p>
+        <p><strong>Season:</strong> {{ itinerary.season }}</p>
+        <p><strong>Duration:</strong> {{ itinerary.duration }}</p>
+    </div>
+    <img src="{{ itinerary.map_image.url }}" class="itinerary-img" alt="Map Image">
+    <div class="itinerary-tabs">
+        <button id="itineraryTab" class="tablinks active" onclick="openTab(event, 'itinerary')">Itinerary</button>
+        <button id="detailTab" class="tablinks" onclick="openTab(event, 'detail-itinerary')">Detail Itinerary</button>
+    </div>
+
+    <!-- Itinerary Content -->
+    <div id="itinerary" class="tabcontent">
+        <!-- Content for Itinerary tab -->
+        <div class="itinerary-card">
+            <div class="itinerary-info">
+                <p><strong>Itinerary:</strong></p>
+                <p>{{ itinerary.itinerary }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Itinerary Content -->
+    <div id="detail-itinerary" class="tabcontent" style="display: none;">
+        <div class="itinerary-card">
+            <div class="itinerary-info">
+                <p><strong>Detail Itinerary:</strong></p>
+                <p>{{ itinerary.detail_itinerary }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    document.getElementById("itineraryTab").click();
+</script>
+{% endblock %}

@@ -1,23 +1,34 @@
 from django.contrib import admin
-from .models import Post, Category, Gear, Itinerary
-
+from .models import Post, Itinerary, Product, Order, OrderItem, ShippingAddress
+from django.http import HttpResponseRedirect
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'created_at')  
     search_fields = ['title', 'author__username'] 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)  # Display these fields in the list view
-    search_fields = ['name']  # Add search functionality for name
-
-@admin.register(Gear)
-class GearAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'quantity', 'size', 'price')  # Display these fields in the list view
-    list_filter = ('category',)  # Add filter based on category
-    search_fields = ('name', 'info')  # Add search functionality for name and info fields
-
 @admin.register(Itinerary)
 class ItineraryAdmin(admin.ModelAdmin):
-    list_display = ('destination', 'itinerary', 'detail_itinerary', 'season', 'location', 'duration', 'map_image')
+    list_display = ('i_id', 'destination', 'itinerary', 'detail_itinerary', 'season', 'location', 'duration', 'map_image')
     search_fields = ['destination', 'season', 'location', 'duration']
+    fields = ('i_id', 'destination', 'itinerary', 'detail_itinerary', 'season', 'location', 'duration', 'map_image')
+
+#shop
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'product_image', 'quantity', 'size')
+    search_fields = ['name', 'price', 'size']
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('user', 'date_ordered', 'complete', 'transaction_id')
+    search_fields = ['user', 'date_ordered']
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('product', 'order', 'quantity', 'date_added')
+    search_fields = ['product', 'date_added']
+
+@admin.register(ShippingAddress)
+class ShippingAddressAdmin(admin.ModelAdmin):
+    list_display = ('user', 'order', 'address', 'city', 'date_added')
+    search_fields = ['user', 'order']

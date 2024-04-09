@@ -1,0 +1,6 @@
+{% block object-tools-items %}
+    {{ block.super }}
+    <li>
+        <a href="{% url 'admin:Trekmate_itinerary_change' obj.pk %}" class="edit-link">Edit</a>
+    </li>
+{% endblock %}

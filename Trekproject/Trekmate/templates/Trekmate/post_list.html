@@ -2,28 +2,40 @@
 {% load static %}
 {% block content %}
 <head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'post_list.css' %}">
 </head>
-<main class="container">
+<main class="container mt-4">
     <div class="row">
-        {% for post in posts %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="{% static 'images/1.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ post.title }}</h5>
-                    <p class="card-text">{{ post.short_description }}</p> 
+        <div class="col-md-9">
+            <div class="row">
+                {% for post in posts %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="Post Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.short_description }}</p> 
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Author: {{ post.author }}</small>
+                            <br>
+                            <small class="text-muted">Posted at: {{ post.created_at }}</small>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'post_detail' id=post.id %}" class="btn">Read More</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <small class="text-muted">Author: {{ post.author }}</small>
-                    <br>
-                    <small class="text-muted">Posted at: {{ post.created_at }}</small>
-                </div>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
+        <div class="col-md-3">
+            <a class="btn" href="{% url 'create_post' %}">Share your experience</a>
+            </a>
+        </div>
     </div>
 </main>
 {% endblock %}
-
-

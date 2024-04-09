@@ -6,19 +6,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'base.css' %}">
     <title>{% block title %}Trekmate{% endblock %}</title>
+    <style>
+        .dropdown-toggle {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 17%;
+        }
+
+        .dropdown-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+    
+        .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <h1 class="logo">Trekmate</h1>
             <ul class="nav-links">
-    
                     <li class="active"><a href="{% url 'home' %}">Home</a></li>
                     <li class=""><a href="{% url 'shop' %}">Shop</a></li>
                     <li class=""><a href="{% url 'destination' %}">Destination</a></li>
                     <li class=""><a href="{% url 'post_list' %}">Blog</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'user-logout' %}">Logout</a></li>
+                        
+                        <li class="dropdown" style="position: relative;top: 13px;">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/480px-User_icon_2.svg.png" alt="Profile Image" class="profile-image">
+                            </a>
+                            <ul class="dropdown-menu" style="padding: 10px 20px;">
+                                <li><a href="{% url 'user-logout' %}">Profile</a></li>
+                                <li><a href="{% url 'user-logout' %}">Update Password</a></li>
+                                <li><a href="{% url 'user-logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+
                     {% else %}
                         <li><a href="{% url 'mylogin' %}?next={{ request.path }}">Login</a></li>
                     {% endif %}

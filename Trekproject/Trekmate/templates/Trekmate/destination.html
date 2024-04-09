@@ -2,50 +2,7 @@
 {% load static %}
 {% block content %}
 <head>
-
 </head>
-
-<body>
-    <div class="container">
-        <h3 class="heading">Popular Destinations</h3>
-        <div class="destinations">
-            <div class="destination-card">
-                <img src="{%static 'images/paanch.jpg'}" class="img-fluid" alt="">
-                <div class="destinations-info">
-                    <h4 class="destination">Shey Phoksundo</h4>
-                    <p>Description of Shey Phoksundo.</p>
-                    <a href="{% url 'itinerary' %}" class="btn btn-primary">Look Now</a>
-                </div>
-            </div>
-            <div class="destination-card">
-                <img src="../../../images/ebc.jpg" class="img-fluid" alt="">
-                <div class="destinations-info">
-                    <h4 class="destination">EBC</h4>
-                    <p>Description of EBC.</p>
-                    <a href="booking.html" class="btn btn-primary">Look Now</a>
-                </div>
-            </div>
-            <div class="destination-card">
-                <img src="../../../images/paanch pokhari.jpg" class="img-fluid" alt="">
-                <div class="destinations-info">
-                    <h4 class="destination">Tsho Rolpa</h4>
-                    <p>Description of Tsho Rolpa.</p>
-                    <a href="booking.html" class="btn btn-primary">Look Now</a>
-                </div>
-            </div>
-            <div class="destination-card">
-                <img src="../../../images/mardi.jpg" class="img-fluid" alt="">
-                <div class="destinations-info">
-                    <h4 class="destination">Mardi Base Camp</h4>
-                    <p>Description of Mardi Base Camp.</p>
-                    <a href="booking.html" class="btn btn-primary">Look Now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-</body>
-
 <style>
     
     body {
@@ -63,6 +20,7 @@
 .heading {
     font-weight: bold;
     text-align: center;
+    font-family: 'Pacifico', cursive;
 }
 
 .destinations {
@@ -72,21 +30,47 @@
 }
 
 .destination-card {
-    width: 45%;
+    width: 40%; 
+    height: 300px; 
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
+    position: relative; 
+    overflow: hidden; 
 }
 
 .destination-card img {
     width: 100%;
+    height: 100%; 
+    object-fit: cover; 
     border-radius: 10px;
-    margin-bottom: 15px;
+    transition: 0.3s ease; 
+}
+
+.destination-card:hover img {
+    transform: scale(1.1); 
 }
 
 .destinations-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
     text-align: center;
+    color: #fff;
+}
+
+.destination-card:hover .destinations-info {
+    opacity: 1; 
+}
+
+.destination-info-content {
+    display: none;
+}
+
+.destination-card:hover .destination-info-content {
+    display: block; 
 }
 
 .destination {
@@ -105,8 +89,38 @@
 .btn:hover {
     background-color: #0056b3;
 }
-   
 </style>
+<body>
+    <div class="container">
+        <h3 class="heading">Popular Destinations</h3>
+        <div class="destinations">
+            {% for itinerary in itineraries %}
+            <div class="destination-card">
+                <img src="{{ itinerary.map_image.url }}" class="itinerary-img" alt="Map Image">
+                <div class="destinations-info">
+                    <div class="destination-info-content">
+                        <h4 class="destination">{{ itinerary.destination }}</h4>
+                        <p>{{ itinerary.location }}</p>
+                        <button class="btn btn-primary look-now" data-itinerary-id="{{ itinerary.i_id }}">Look Now</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const lookNowButtons = document.querySelectorAll(".look-now");
+        lookNowButtons.forEach(function(button) {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+                const itineraryId = this.getAttribute("data-itinerary-id");
+                const itineraryDetailURL = `/itinerary/${itineraryId}/`;
+                window.location.href = itineraryDetailURL;
+            });
+        });
+    });
+</script>
 {% endblock %}
-
-
