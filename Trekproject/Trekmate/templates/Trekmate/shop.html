@@ -25,30 +25,30 @@
 
 </script>
 </head>
-        <div class="d-flex justify-content-end">
-            <div class="form-inline my-2 my-lg-0">
+        <div class="d-flex justify-content-end mt-3">
+            <div class="form-inline my-2 my-lg-0 mr-3 mt-3">
             <a href="{% url 'cart' %}">
             <img src="{% static 'images/trolley-cart.png' %}" style="height: 50px; margin-bottom: 20px;">
             </a>
             <p id="cart-total">{{cartItems}}</p>
             </div>
         </div>
-        <div class="box-element">
-            {% for product in products %}
-            <div class="col-lg-4">
-                <img class="thumbnail" src="{{product.product_image.url}}">
-                <div class="box-element product">
-                    <h6><strong>{{product.name}}</strong></h6>
-                    <hr>
-    
-                    <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-                    
-                    <a class="btn btn-outline-success" href="#">View</a>
-                    <h4 style="display: inline-block;"><strong>${{product.price}}</strong></h4>
-    
+        <div class="main-container">
+            <div class="row">
+                {% for product in products %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="box-element product-card">
+                        <img class="thumbnail" src="{{ product.product_image.url }}">
+                        <div class="box-element product">
+                            <h6><strong>{{ product.name }}</strong></h6>
+                            <hr>
+                            <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                            <a class="btn btn-outline-success" href="#">View</a>
+                            <h4 style="display: inline-block;"><strong>${{ product.price }}</strong></h4>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
             </div>
         </div>
         <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>

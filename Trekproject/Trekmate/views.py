@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import Post
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, DestinationForm
 from .models import Itinerary
 from .models import Post, Product, Order, OrderItem, ShippingAddress
 from django.contrib.auth.forms import  AuthenticationForm
@@ -13,6 +13,53 @@ from django.urls import reverse
 from django.http import JsonResponse
 import json 
 import datetime
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+import requests
+from django.contrib.auth import update_session_auth_hash
+from .forms import PasswordChangeForm
+from django.contrib import messages
+
+def user_dashboard(request):
+    user = request.user
+
+    if request.method == 'POST':
+
+        return render(request, 'user_dashboard.html', {'user': user})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        password_form = PasswordChangeForm(request.user, request.POST)
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)
+            return redirect('dashboard')
+        else:
+            print("Password form errors:", password_form.errors)  # Debugging code
+    else:
+        password_form = PasswordChangeForm(request.user)
+    return render(request, 'Trekmate/change_password.html', {'password_form': password_form})
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        
+        # Update user information
+        user = request.user
+        user.username = username
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        
+        return redirect('dashboard')
+    else:
+        return render(request, 'Trekmate/edit_profile.html')
 
 def homepage(request):
     return render(request, 'Trekmate/home.html')
@@ -38,8 +85,6 @@ def shop(request):
 	return render(request, 'Trekmate/shop.html', context)
 
 
-
-@login_required
 def post_list(request):
     posts = Post.objects.all() 
     return render(request, 'Trekmate/post_list.html', {'posts': posts})
@@ -111,6 +156,19 @@ def mylogin(request):
     context = {'loginform': form}
     return render(request, 'Trekmate/mylogin.html', context=context)
 
+def recommend_destination(request):
+    if request.method == 'POST':
+        form = DestinationForm(request.POST)
+        if form.is_valid():
+            season = form.cleaned_data['season']
+            duration = form.cleaned_data['duration']
+            cost = form.cleaned_data['cost']
+
+            destinations = Itinerary.objects.filter(season=season, duration__lte=duration, cost=cost)
+            return render(request, 'Trekmate/recommend.html', {'form': form, 'destinations': destinations})
+    else:
+        form = DestinationForm()
+    return render(request, 'Trekmate/recommend.html', {'form': form})
 
 
 def user_logout(request):
@@ -149,12 +207,6 @@ def cart(request):
     items = order.orderitem_set.all()
     context = {'items': items, 'order': order}
     return render(request, 'Trekmate/cart.html', context)
-
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from .models import Product, Order, OrderItem
-
-
 
 
 def checkout(request):
@@ -218,3 +270,37 @@ def processOrder(request):
             return JsonResponse({'error': 'Invalid total amount.'}, status=400)
     else:
         return JsonResponse({'error': 'Method not allowed.'}, status=405)
+    
+def verify_payment(request):
+    if request.method == 'POST':
+        token = request.POST.get('token') 
+        success, message = process_payment(token)
+        return JsonResponse({'success': success, 'message': message})
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
+
+def process_payment(token):
+    url = "https://khalti.com/api/v2/payment/verify/"
+    headers = {
+        "Authorization": "Key test_secret_key_bdc492f919e64ee8be0ec481f8ca27a7",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "token": token,
+        "amount": 1000,  # Amount in paisa (e.g., 1000 paisa = NPR 10)
+    }
+
+    response = requests.post(url, headers=headers, json=payload)
+    data = response.json()
+    
+    if response.status_code == 200:
+        if data['idx'] == 'E-Khalti-00OK':
+            # Payment successful
+            return True, "Payment successful"
+        else:
+            # Payment failed
+            return False, "Payment failed"
+    else:
+        # Error occurred
+        return False, data['detail']
+

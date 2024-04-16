@@ -3,8 +3,9 @@
 {% block content %}
 <head>
     <link rel="stylesheet" href="{% static 'itinerary.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-NXnhv5/0f3QBgQDoRYwhaRJR6d44UnVXCeU3+5lAT47AaO7Y5wPe6SNtz/Bn04QTymBt02zDe9WPnDhZP03N3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        body {
+        body{
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
@@ -12,29 +13,31 @@
         }
         .itinerary-container {
             max-width: 100%;
-            padding: 20px;
-            margin-top: 70px; /* Adjusted margin to prevent overlay on navbar */
-            margin-bottom: 50px; /* Adjusted margin to prevent overlay on footer */
+            padding: 0px;
+            margin-bottom: 50px;
         }
         .destination {
             font-size: 24px;
             font-weight: bold;
             color: #007bff;
             margin-bottom: 20px;
+            text-align: center;
         }
         .itinerary-info {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
+            text-align: center;
         }
         .itinerary-info p {
             margin: 0 10px;
         }
         .itinerary-img {
             width: 100%;
-            max-width: 100%;
-            height: auto;
+            height: 500px;
             margin-bottom: 20px;
+            object-fit: cover;
+            opacity: 1;
         }
         .itinerary-tabs {
             display: flex;
@@ -68,14 +71,15 @@
         }
     </style>
 </head>
+<body>
 <div class="itinerary-container">
-    <h2 style="text-align: center; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;">{{ itinerary.destination }}</h2>
-    <div class="itinerary-info">
-        <p><strong>Location:</strong> {{ itinerary.location }}</p>
-        <p><strong>Season:</strong> {{ itinerary.season }}</p>
-        <p><strong>Duration:</strong> {{ itinerary.duration }}</p>
-    </div>
     <img src="{{ itinerary.map_image.url }}" class="itinerary-img" alt="Map Image">
+        <h2 style="text-align: center; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;">{{ itinerary.destination }}</h2>
+        <div class="itinerary-info">
+            <p><strong>Location:</strong> {{ itinerary.location }}</p>
+            <p><strong>Season:</strong> {{ itinerary.season }}</p>
+            <p><strong>Duration:</strong> {{ itinerary.duration }}</p>
+        </div>
     <div class="itinerary-tabs">
         <button id="itineraryTab" class="tablinks active" onclick="openTab(event, 'itinerary')">Itinerary</button>
         <button id="detailTab" class="tablinks" onclick="openTab(event, 'detail-itinerary')">Detail Itinerary</button>
@@ -119,4 +123,5 @@
     }
     document.getElementById("itineraryTab").click();
 </script>
+</body>
 {% endblock %}

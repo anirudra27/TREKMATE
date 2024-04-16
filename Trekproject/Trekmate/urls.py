@@ -16,11 +16,13 @@ urlpatterns = [
     path('post/<int:pk>/edit/', views.edit_post, name='edit_post'),
     path('post/<int:pk>/delete/', views.delete_post, name='delete_post'),
     path('shop/', views.shop, name='shop'),
-    
-    # path('remove_from_cart/<int:cart_item_id>/', views.remove_from_cart, name='remove_from_cart'),
-    # path('clear_cart/', views.clear_cart, name='clear_cart'),
+    path('recommend/', views.recommend_destination, name='recommend'),
+    path('dashboard/', views.user_dashboard, name='user_dashboard'),
     path('cart/', views.cart, name='cart'),
     path('checkout/', views.checkout, name="checkout"),
     path('update_item/', views.updateItem, name="update_item"),
     path('process_order/', views.processOrder, name="process_order"),
+    path('process-payment/', views.process_payment, name='process_payment'),
+    path('change_password/', views.change_password, name='change_password'),
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
 ]

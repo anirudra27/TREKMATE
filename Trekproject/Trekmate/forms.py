@@ -3,6 +3,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from .models import Post
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 
 # Registration Form
 class CustomUserCreationForm(UserCreationForm):
@@ -41,7 +42,8 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-    
+
+
 # Post Blog Creation Form
 class PostForm(forms.ModelForm):
     class Meta:
@@ -54,3 +56,45 @@ class PostForm(forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'})
         }
     
+
+class DestinationForm(forms.Form):
+    season = forms.CharField(max_length=30, required=True)
+    duration = forms.CharField(max_length=30, required=True)
+    location = forms.CharField(max_length=30, required=True)
+
+
+
+
+class DestinationForm(forms.Form):
+    SEASON_CHOICES = (
+        ('Spring', 'Spring'),
+        ('Summer', 'Summer'),
+        ('Autumn', 'Autumn'),
+        ('Winter', 'Winter'),
+    )
+    duration = forms.CharField(max_length=100, label='Duration (days)')
+    season = forms.ChoiceField(choices=SEASON_CHOICES)
+    cost = forms.CharField(max_length=50)
+
+class EditProfileForm(forms.ModelForm):
+    password = forms.CharField(label='Current Password', widget=forms.PasswordInput)
+    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput, required=False)
+    confirm_new_password = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput, required=False)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        new_password = cleaned_data.get('new_password')
+        confirm_new_password = cleaned_data.get('confirm_new_password')
+
+        if password and (not self.instance.check_password(password)):
+            raise forms.ValidationError('Incorrect current password.')
+
+        if new_password and new_password != confirm_new_password:
+            raise forms.ValidationError('New passwords do not match.')
+
+        return cleaned_data

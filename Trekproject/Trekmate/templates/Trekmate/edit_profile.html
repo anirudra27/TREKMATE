@@ -1,0 +1,34 @@
+{% extends 'Trekmate/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'edit_profile.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<div class="edit-container">
+    <h1 class="text-center">Edit Profile</h1>
+    <form method="post" enctype="multipart/form-data" class="edit-form">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <strong>Error!</strong> Please correct the following errors:<br>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <input type="text" class="form-control" id="username" name="username" value="{{ request.user.username }}" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ request.user.first_name }}" placeholder="First Name" required>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ request.user.last_name }}" placeholder="Last Name" required>
+        </div>
+        <button type="submit" class="btn btn-success">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

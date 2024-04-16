@@ -8,9 +8,9 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Itinerary)
 class ItineraryAdmin(admin.ModelAdmin):
-    list_display = ('i_id', 'destination', 'itinerary', 'detail_itinerary', 'season', 'location', 'duration', 'map_image')
+    list_display = ('i_id', 'destination', 'itinerary', 'detail_itinerary', 'season', 'cost', 'location', 'duration', 'map_image')
     search_fields = ['destination', 'season', 'location', 'duration']
-    fields = ('i_id', 'destination', 'itinerary', 'detail_itinerary', 'season', 'location', 'duration', 'map_image')
+    fields = ('i_id', 'destination', 'itinerary', 'detail_itinerary', 'season', 'location', 'cost', 'duration', 'map_image')
 
 #shop
 @admin.register(Product)

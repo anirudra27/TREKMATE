@@ -1,4 +1,84 @@
-<html>
-    <h1>This is my dashboard</h1>
-    <a href="{% url 'user-logout' %}"> Logout here</a>
-</html>
+{% extends 'Trekmate/base.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard.css' %}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="dashboard-container emp-profile">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="{% static 'images/profile.jpg' %}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="profile-head">
+                <h5>{{ user.username }}</h5>
+                <h6>{{ user.email }}</h6>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                           aria-controls="home" aria-selected="true">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'change_password' %}">Change Password</a>
+            <a href="{% url 'edit_profile' %}">Edit Profile</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-work">
+                <p>BLOGS POSTED</p>
+                {% for post in user.post_set.all %}
+                    <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a><br/>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Username</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.username }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.first_name }} {{ user.last_name }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.email }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Date Joined</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ user.date_joined }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

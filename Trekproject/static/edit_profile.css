@@ -1,0 +1,18 @@
+.edit-container {
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.edit-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.edit-form .form-group {
+    margin-bottom: 20px;
+}
+
+.edit-form input[type="password"] {
+    width: 100%;
+}

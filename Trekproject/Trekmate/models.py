@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+    
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
@@ -20,6 +21,7 @@ class Itinerary(models.Model):
     destination = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     season = models.CharField(max_length=100)
+    cost = models.CharField(max_length=50, default='')
     itinerary = models.TextField()
     detail_itinerary = models.TextField()
     duration = models.CharField(max_length=100)
