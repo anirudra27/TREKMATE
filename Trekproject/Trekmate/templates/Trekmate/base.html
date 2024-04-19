@@ -26,9 +26,9 @@
     max-width: none; 
     margin: 0 auto; 
     padding: 0 20px; 
-    display: flex; /* Adjusted to use flexbox */
-    justify-content: space-between; /* Align items on both ends */
-    align-items: center; /* Center items vertically */
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
 }
 
 .logo {
@@ -40,8 +40,8 @@
 
 .nav-links {
     list-style: none; 
-    margin: 0; /* Reset margin */
-    padding: 0; /* Reset padding */
+    margin: 0; 
+    padding: 0; 
 }
 
 .nav-links li {
@@ -58,10 +58,98 @@
     font-weight: bold; 
 }
 .profile-image-navbar {
-    width: 30px; /* Adjust the width as needed */
-    height: 30px; /* Adjust the height as needed */
+    width: 30px;
+    height: 30px; 
     top: 13px;
 }
+
+/* Footer styles */
+.footer {
+        background-color: #24262b;
+        padding: 40px 0; 
+    }
+
+    .footer-container {
+        max-width: 1170px;
+        margin: auto;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .footer-col {
+        width: 25%;
+        padding: 0 15px;
+    }
+
+    .footer-col h4 {
+        font-size: 18px;
+        color: #ffffff;
+        text-transform: capitalize;
+        margin-bottom: 15px;
+        font-weight: 500;
+        position: relative;
+    }
+
+    .footer-col h4::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        background-color: #e91e63;
+        height: 2px;
+        width: 50px;
+    }
+
+    .footer-col p {
+        color: white;
+    }
+
+    .footer-col ul {
+        list-style: none;
+    }
+
+    .footer-col ul li {
+        margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+        font-size: 16px;
+        text-transform: capitalize;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 300;
+        transition: all 0.3s ease;
+    }
+
+    .footer-col ul li a:hover {
+        color: #e91e63;
+    }
+
+
+    .footer-col .social-links a img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+
+    /* Responsive */
+    @media (max-width: 767px) {
+        .footer-col {
+            width: 50%;
+            margin-bottom: 30px;
+        }
+    }
+
+    @media (max-width: 574px) {
+        .footer-col {
+            width: 100%;
+        }
+    }
 </style>
 </head>
 <body>
@@ -87,15 +175,45 @@
             </ul>
         </div>
     </nav>
-    <body>
     <div>
         {% block content %}
         {% endblock %}
     </div>
-    </body>
     <footer class="footer">
-        <div>
-            <p>&copy; {% now "Y" %} Trekmate. All rights reserved.</p>
+        <div class="footer-container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>Trekmate</h4>
+                    <p style="color: white;">A trekker's friend, all the way long</p>
+                </div>
+                <div class="footer-col">
+                    <h4>We offer</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Itinerary</a></li>
+                        <li><a href="#">E-shop</a></li>
+                        <li><a href="#">Destination Recommendation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>online shop</h4>
+                    <ul>
+                        <li><a href="#">Jacket</a></li>
+                        <li><a href="#">Bag</a></li>
+                        <li><a href="#">Shoes</a></li>
+                        <li><a href="#">Stick</a></li>
+                        <li><a href="#">Sunglass</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><img src="{% static 'images/fb.png'%}" alt="Facebook"></a>
+                        <a href="#"><img src="{% static 'images/ig.png'%}" alt="Instagram"></a>
+                        <a href="#"><img style="margin-bottom: 10px;"  src="{% static 'images/ld.png'%}" alt="LinkedIn"></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 </body>

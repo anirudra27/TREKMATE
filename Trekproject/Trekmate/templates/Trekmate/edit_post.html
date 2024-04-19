@@ -7,36 +7,43 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-<div class="edit-post-container mt-4">
-    <h2>Edit Your Post</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="title">Title:</label>
-            <input type="text" class="form-control" id="title" name="title" value="{{ form.title.value }}">
-        </div>
-        <div class="form-group">
-            <label for="short_description">Short Description:</label>
-            <input type="text" class="form-control" id="short_description" name="short_description" value="{{ form.short_description.value }}">
-        </div>
-        <div class="form-group">
-            <label for="content">Content:</label>
-            <textarea class="form-control" id="content" name="content" rows="5">{{ form.content.value }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="image">Image:</label>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="image" name="image">
-                <label class="custom-file-label" for="image">Choose file</label>
+<div class="form-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header"><h3>Edit Your Post</h3></div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ form.title.value }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="short_description">Short Description:</label>
+                            <input type="text" class="form-control" id="short_description" name="short_description" value="{{ form.short_description.value }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Content:</label>
+                            <textarea class="form-control" id="content" name="content" rows="5">{{ form.content.value }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image:</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="image" name="image">
+                                <label class="custom-file-label" for="image">Choose file</label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="clear_image" name="clear_image">
+                                <label class="form-check-label" for="clear_image">Clear Image</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
             </div>
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="clear_image" name="clear_image">
-                <label class="form-check-label" for="clear_image">Clear Image</label>
-            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
+    </div>
 </div>
 
 </body>

@@ -1,0 +1,22 @@
+.form-container {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.card {
+    border: none; 
+}
+
+.card-header {
+    background-color: #4b862c;
+    border-bottom: 1px solid #ced4da;
+}
+
+.card-body {
+    padding: 0; 
+}
+h3{
+    justify-content: center;
+    text-align: center;
+    color: white;
+}

@@ -282,7 +282,7 @@ def verify_payment(request):
 def process_payment(token):
     url = "https://khalti.com/api/v2/payment/verify/"
     headers = {
-        "Authorization": "Key test_secret_key_bdc492f919e64ee8be0ec481f8ca27a7",
+        "Authorization": "Key test_public_key_12ee748969e54285b99b2897976e194b",
         "Content-Type": "application/json",
     }
     payload = {
@@ -303,4 +303,3 @@ def process_payment(token):
     else:
         # Error occurred
         return False, data['detail']
-
