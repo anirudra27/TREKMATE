@@ -1,79 +1,13 @@
-<!-- recommend_destination.html -->
 {% extends 'Trekmate/base.html' %}
 {% load static %}
 {% block content %}
-<head>
+<head> 
+    <link rel="stylesheet" type="text/css" href="{% static 'recommend.css' %}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-</head>
-<style>
-    /* styles.css */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-.recommend-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-}
-
-.recommendation-form {
-    margin-bottom: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.btn {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-}
-
-.recommended-destinations {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.recommended-destinations h2 {
-    margin-bottom: 15px;
-}
-
-.destination-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.destination-list li {
-    margin-bottom: 10px;
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-
-</style>
 <div class="recommend-container">
     <div class="recommendation-form">
+        <h3>Fill the criteria</h3>
         <form method="post" action="{% url 'recommend' %}">
             {% csrf_token %}
             <div class="form-group">

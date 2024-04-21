@@ -77,6 +77,16 @@
         .button-24:active {
             opacity: .5;
         }
+        h1{
+            font-size: 45px;
+            font-weight: 700;
+        }    
+        
+        .post-short{
+            margin-left: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -104,7 +114,11 @@
                 </div>
                 {% endif %}
             </div>
+            <div class="post-short" >
+                {{ post.short_description|linebreaksbr }}
+            </div>
         </div>
+    
 
         <div class="post-info">
             <p class="author">Author: {{ post.author }}</p>
@@ -112,7 +126,7 @@
         </div>
         
         <div class="post-content">
-            {{ post.content }}
+            {{ post.content|linebreaksbr }}
         </div>
     </div>
 </div>

@@ -20,96 +20,6 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import PasswordChangeForm
 from django.contrib import messages
 
-def user_dashboard(request):
-    user = request.user
-
-    if request.method == 'POST':
-
-        return render(request, 'user_dashboard.html', {'user': user})
-
-@login_required
-def change_password(request):
-    if request.method == 'POST':
-        password_form = PasswordChangeForm(request.user, request.POST)
-        if password_form.is_valid():
-            user = password_form.save()
-            update_session_auth_hash(request, user)
-            return redirect('dashboard')
-        else:
-            print("Password form errors:", password_form.errors)  # Debugging code
-    else:
-        password_form = PasswordChangeForm(request.user)
-    return render(request, 'Trekmate/change_password.html', {'password_form': password_form})
-
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        
-        # Update user information
-        user = request.user
-        user.username = username
-        user.email = email
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
-        
-        return redirect('dashboard')
-    else:
-        return render(request, 'Trekmate/edit_profile.html')
-
-def homepage(request):
-    return render(request, 'Trekmate/home.html')
-
-def destination(request):
-    itineraries = Itinerary.objects.all()
-    return render(request, 'Trekmate/destination.html', {'itineraries': itineraries})
-
-def shop(request):
-	if request.user.is_authenticated:
-		user = request.user
-		order, created = Order.objects.get_or_create(user=user, complete=False)
-		items = order.orderitem_set.all()
-		cartItems = order.get_cart_items
-	else:
-		#Create empty cart for now for non-logged in user
-		items = []
-		order = {'get_cart_total':0, 'get_cart_items':0, 'shipping':False}
-		cartItems = order['get_cart_items']
-
-	products = Product.objects.all()
-	context = {'products':products, 'cartItems':cartItems}
-	return render(request, 'Trekmate/shop.html', context)
-
-
-def post_list(request):
-    posts = Post.objects.all() 
-    return render(request, 'Trekmate/post_list.html', {'posts': posts})
-
-@login_required
-def create_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            messages.success(request, 'Your post has been created successfully.')
-            return redirect('post_list')
-        else:
-            messages.error(request, 'Failed to create the post. Please check the form data.')
-    else:
-        form = PostForm()
-    return render(request, 'Trekmate/create_post.html', {'form': form})
-
-def post_detail(request, id):
-    post = get_object_or_404(Post, id=id)
-    return render(request, 'Trekmate/post_detail.html', {'post': post})
-
-
 def register(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -156,6 +66,56 @@ def mylogin(request):
     context = {'loginform': form}
     return render(request, 'Trekmate/mylogin.html', context=context)
 
+def user_logout(request):
+    logout(request)
+    return redirect("home")
+
+    
+@login_required
+def dashboard(request):
+    return render(request, 'Trekmate/dashboard.html')
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        password_form = PasswordChangeForm(request.user, request.POST)
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)
+            return redirect('home')
+        else:
+            print("Password form errors:", password_form.errors)  # Debugging code
+    else:
+        password_form = PasswordChangeForm(request.user)
+    return render(request, 'Trekmate/change_password.html', {'password_form': password_form})
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        
+        # Update user information
+        user = request.user
+        user.username = username
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        
+        return redirect('dashboard')
+    else:
+        return render(request, 'Trekmate/edit_profile.html')
+
+def homepage(request):
+    return render(request, 'Trekmate/home.html')
+
+def destination(request):
+    itineraries = Itinerary.objects.all()
+    return render(request, 'Trekmate/destination.html', {'itineraries': itineraries})
+
 def recommend_destination(request):
     if request.method == 'POST':
         form = DestinationForm(request.POST)
@@ -170,18 +130,29 @@ def recommend_destination(request):
         form = DestinationForm()
     return render(request, 'Trekmate/recommend.html', {'form': form})
 
-
-def user_logout(request):
-    logout(request)
-    return redirect("home")
+def post_list(request):
+    posts = Post.objects.all() 
+    return render(request, 'Trekmate/post_list.html', {'posts': posts})
 
 @login_required
-def dashboard(request):
-    return render(request, 'Trekmate/dashboard.html')
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, 'Your post has been created successfully.')
+            return redirect('post_list')
+        else:
+            messages.error(request, 'Failed to create the post. Please check the form data.')
+    else:
+        form = PostForm()
+    return render(request, 'Trekmate/create_post.html', {'form': form})
 
-def itinerary_detail(request, i_id):
-    itinerary = get_object_or_404(Itinerary, i_id=i_id)
-    return render(request, 'Trekmate/itinerary_detail.html', {'itinerary': itinerary})
+def post_detail(request, id):
+    post = get_object_or_404(Post, id=id)
+    return render(request, 'Trekmate/post_detail.html', {'post': post})
 
 def edit_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -200,6 +171,26 @@ def delete_post(request, pk):
         post.delete()
         return HttpResponseRedirect(reverse('post_list'))
     return render(request, 'delete_post.html', {'post': post})
+
+def itinerary_detail(request, i_id):
+    itinerary = get_object_or_404(Itinerary, i_id=i_id)
+    return render(request, 'Trekmate/itinerary_detail.html', {'itinerary': itinerary})
+
+
+def shop(request):
+	if request.user.is_authenticated:
+		user = request.user
+		order, created = Order.objects.get_or_create(user=user, complete=False)
+		items = order.orderitem_set.all()
+		cartItems = order.get_cart_items
+	else:
+		items = []
+		order = {'get_cart_total':0, 'get_cart_items':0, 'shipping':False}
+		cartItems = order['get_cart_items']
+
+	products = Product.objects.all()
+	context = {'products':products, 'cartItems':cartItems}
+	return render(request, 'Trekmate/shop.html', context)
 
 def cart(request):
     user = request.user
@@ -280,7 +271,7 @@ def verify_payment(request):
         return JsonResponse({'error': 'Invalid request method'})
 
 def process_payment(token):
-    url = "https://khalti.com/api/v2/payment/verify/"
+    url = "https://a.khalti.com/api/v2/payment/initiate/"
     headers = {
         "Authorization": "Key test_public_key_12ee748969e54285b99b2897976e194b",
         "Content-Type": "application/json",

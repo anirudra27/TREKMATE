@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-    
+#Blog Post
+
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
@@ -26,11 +27,13 @@ class Itinerary(models.Model):
     detail_itinerary = models.TextField()
     duration = models.CharField(max_length=100)
     map_image = models.ImageField(upload_to='destination_maps')
-
+    difficulty = models.CharField(max_length=100)
+    
     def __str__(self):
         return self.destination
 
-#shop
+#Gear Shop
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
@@ -40,6 +43,8 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+#Gear Order
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -70,6 +75,8 @@ class Order(models.Model):
         total = sum([item.quantity for item in orderitems])
         return total 
 
+#OrderItem
+
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -80,6 +87,8 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+
+#Shipping Address
 
 class ShippingAddress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

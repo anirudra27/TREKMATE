@@ -7,64 +7,63 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-XQJwZj/nwq+rwY5PVooC8czLiFaemjT/bZQnrgFfb53loT6ccjvY7DdT8hx7viHnmPI2N1Rx2QLqF/f7UHwCfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>{% block title %}Trekmate{% endblock %}</title>
     <style>
-    /* Reset styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-/* Navbar styles */
-.navbar {
-    background-color: #333; 
-    color: white;
-    padding: 15px 0; 
-    overflow: auto;
-}
+    /* Navbar styles */
+    .navbar {
+        background-color: rgba(35, 81, 54, 0.8); 
+        color: white;
+        padding: 15px 0;
+        overflow: auto;
+    }
 
-.container {
-    max-width: none; 
-    margin: 0 auto; 
-    padding: 0 20px; 
-    display: flex;
-    justify-content: space-between;
-    align-items: center; 
-}
+    .container {
+        max-width: none; 
+        margin: 0 auto; 
+        padding: 0 20px; 
+        display: flex;
+        justify-content: space-between;
+        align-items: center; 
+    }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold; 
-    display: inline-block; 
-    margin-right: 20px; 
-}
+    .logo {
+        font-size: 24px;
+        font-weight: bold; 
+        display: inline-block; 
+        margin-right: 20px; 
+    }
 
-.nav-links {
-    list-style: none; 
-    margin: 0; 
-    padding: 0; 
-}
+    .nav-links {
+        list-style: none; 
+        margin: 0; 
+        padding: 0; 
+    }
 
-.nav-links li {
-    display: inline-block; 
-    margin-left: 20px; 
-}
+    .nav-links li {
+        display: inline-block; 
+        margin-left: 20px; 
+    }
 
-.nav-links li a {
-    color: white;
-    text-decoration: none; 
-}
+    .nav-links li a {
+        color: white;
+        text-decoration: none; 
+    }
 
-.nav-links li.active a {
-    font-weight: bold; 
-}
-.profile-image-navbar {
-    width: 30px;
-    height: 30px; 
-    top: 13px;
-}
+    .nav-links li.active a {
+        font-weight: bold; 
+    }
+    .profile-image-navbar {
+        width: 30px;
+        height: 30px; 
+        top: 13px;
+    }
 
 /* Footer styles */
-.footer {
+    .footer {
         background-color: #24262b;
         padding: 40px 0; 
     }
@@ -134,10 +133,10 @@
     height: 40px;
     margin-right: 10px;
     overflow: hidden;
-}
+    }
 
 
-    /* Responsive */
+/* Responsive */
     @media (max-width: 767px) {
         .footer-col {
             width: 50%;
@@ -192,14 +191,13 @@
                         <li><a href="#">Blog</a></li>
                         <li><a href="#">Itinerary</a></li>
                         <li><a href="#">E-shop</a></li>
-                        <li><a href="#">Destination Recommendation</a></li>
+                        <li><a href="#">Recommendation</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>online shop</h4>
                     <ul>
                         <li><a href="#">Jacket</a></li>
-                        <li><a href="#">Bag</a></li>
                         <li><a href="#">Shoes</a></li>
                         <li><a href="#">Stick</a></li>
                         <li><a href="#">Sunglass</a></li>
@@ -210,7 +208,7 @@
                     <div class="social-links">
                         <a href="#"><img src="{% static 'images/fb.png'%}" alt="Facebook"></a>
                         <a href="#"><img src="{% static 'images/ig.png'%}" alt="Instagram"></a>
-                        <a href="#"><img style="margin-bottom: 10px;"  src="{% static 'images/ld.png'%}" alt="LinkedIn"></a>
+                        <a href="#"><img style="margin-bottom: 5px;"  src="{% static 'images/ld.png'%}" alt="LinkedIn"></a>
                     </div>
                 </div>
             </div>

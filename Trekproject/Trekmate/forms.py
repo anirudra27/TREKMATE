@@ -61,7 +61,7 @@ class DestinationForm(forms.Form):
     season = forms.CharField(max_length=30, required=True)
     duration = forms.CharField(max_length=30, required=True)
     location = forms.CharField(max_length=30, required=True)
-
+    difficulty = forms.CharField(max_length=30, required=True)
 
 
 
@@ -72,9 +72,17 @@ class DestinationForm(forms.Form):
         ('Autumn', 'Autumn'),
         ('Winter', 'Winter'),
     )
+    
+    DIFFICULTY_CHOICES = (
+        ('Easy', 'Easy'),
+        ('Moderate', 'Moderate'),
+        ('Hard', 'Hard'),
+    )
+
     duration = forms.CharField(max_length=100, label='Duration (days)')
     season = forms.ChoiceField(choices=SEASON_CHOICES)
     cost = forms.CharField(max_length=50)
+    difficulty = forms.ChoiceField(choices=DIFFICULTY_CHOICES, label='Difficulty')
 
 class EditProfileForm(forms.ModelForm):
     password = forms.CharField(label='Current Password', widget=forms.PasswordInput)

@@ -4,72 +4,7 @@
 <head>
     <link rel="stylesheet" href="{% static 'itinerary.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-NXnhv5/0f3QBgQDoRYwhaRJR6d44UnVXCeU3+5lAT47AaO7Y5wPe6SNtz/Bn04QTymBt02zDe9WPnDhZP03N3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .itinerary-container {
-            max-width: 100%;
-            padding: 0px;
-            margin-bottom: 50px;
-        }
-        .destination {
-            font-size: 24px;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .itinerary-info {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .itinerary-info p {
-            margin: 0 10px;
-        }
-        .itinerary-img {
-            width: 100%;
-            height: 500px;
-            margin-bottom: 20px;
-            object-fit: cover;
-            opacity: 1;
-        }
-        .itinerary-tabs {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .tablinks {
-            background-color: #ddd;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .tablinks.active {
-            background-color: #007bff;
-            color: #fff;
-        }
-        .tabcontent {
-            display: none;
-            margin-top: 20px;
-        }
-        .itinerary-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-    </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="itinerary-container">
@@ -79,6 +14,8 @@
             <p><strong>Location:</strong> {{ itinerary.location }}</p>
             <p><strong>Season:</strong> {{ itinerary.season }}</p>
             <p><strong>Duration:</strong> {{ itinerary.duration }}</p>
+            <p><strong>Diffuculty:</strong> {{ itinerary.difficulty }}</p>
+            <p><strong>Cost (Rs):</strong> {{ itinerary.cost }}</p>
         </div>
     <div class="itinerary-tabs">
         <button id="itineraryTab" class="tablinks active" onclick="openTab(event, 'itinerary')">Itinerary</button>
@@ -89,10 +26,7 @@
     <div id="itinerary" class="tabcontent">
         <!-- Content for Itinerary tab -->
         <div class="itinerary-card">
-            <div class="itinerary-info">
-                <p><strong>Itinerary:</strong></p>
-                <p>{{ itinerary.itinerary }}</p>
-            </div>
+                {{ itinerary.itinerary|linebreaksbr }}
         </div>
     </div>
 
@@ -100,8 +34,7 @@
     <div id="detail-itinerary" class="tabcontent" style="display: none;">
         <div class="itinerary-card">
             <div class="itinerary-info">
-                <p><strong>Detail Itinerary:</strong></p>
-                <p>{{ itinerary.detail_itinerary }}</p>
+                {{ itinerary.detail_itinerary|linebreaksbr }}
             </div>
         </div>
     </div>

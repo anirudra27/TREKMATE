@@ -11,15 +11,16 @@
     <div class="home-container">
         <!-- Image section -->
         <div class="image-section">
-            <img src="{% static 'images/background.jpg' %}" alt="Home Image">
+            <img src="{% static 'images/wallpaper.jpg' %}" alt="Home Image">
+            <div class="overlay"></div>
         </div>
 
         <div class="content-section">
             <h2>Welcome to Trekmate!</h2>
             <p>Explore our amazing destinations and shop for outdoor gear.</p>
             <div class="button-container">
-                <a href="{% url 'destination' %}" class="btn btn-primary">Explore Destinations</a>
-                <a href="{% url 'recommend' %}" class="btn btn-secondary">Search For Destination</a>
+                <a href="{% url 'destination' %}" class="custom-btn ">Explore</a>
+                <a href="{% url 'recommend' %}" class="custom-btn ">Search For Destination</a>
 
             </div>
         </div>

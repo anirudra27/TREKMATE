@@ -40,11 +40,13 @@
                     <div class="box-element product-card">
                         <img class="thumbnail" src="{{ product.product_image.url }}">
                         <div class="box-element product">
-                            <h6><strong>{{ product.name }}</strong></h6>
+                            <h3><strong>{{ product.name }}</strong></h3>
+                            <h6><strong>Size: {{ product.size }}</strong></h6>
                             <hr>
                             <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
                             <a class="btn btn-outline-success" href="#">View</a>
-                            <h4 style="display: inline-block;"><strong>${{ product.price }}</strong></h4>
+                            <h4 style="display: inline-block;"><strong>Rs {{ product.price }}</strong></h4>
+
                         </div>
                     </div>
                 </div>
