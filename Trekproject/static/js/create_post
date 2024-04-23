@@ -1,0 +1,15 @@
+$(document).ready(function() {
+        $("form").submit(function(event) {
+            var title = $("#title").val();
+            var shortDescription = $("#short_description").val();
+            var content = $("#content").val();
+            var image = $("#image").val();
+
+            if (title === '' || shortDescription === '' || content === '' || image === '') {
+                alert("Please fill in all fields.");
+                event.preventDefault(); // Prevent default form submission
+            } else {
+                console.log("Form submitted!"); 
+            }
+        });
+    });

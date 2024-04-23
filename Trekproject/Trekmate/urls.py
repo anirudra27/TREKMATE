@@ -10,10 +10,10 @@ urlpatterns = [
     path('post_list/', views.post_list, name='post_list'),
     path('create_post/', views.create_post, name='create_post'), 
     path('destination/', views.destination, name='destination'),
+    path('itinerary/', views.itinerary_detail, name='itinerary_detail'),
     path('shop/', views.shop, name='shop'),
     path('post/<int:id>/', views.post_detail, name='post_detail'),
     path('itinerary/<str:i_id>/', views.itinerary_detail, name='itinerary_detail'),
-    path('post/<int:pk>/edit/', views.edit_post, name='edit_post'),
     path('post/<int:pk>/delete/', views.delete_post, name='delete_post'),
     path('shop/', views.shop, name='shop'),
     path('recommend/', views.recommend_destination, name='recommend'),
@@ -25,4 +25,5 @@ urlpatterns = [
     path('process-payment/', views.process_payment, name='process_payment'),
     path('change_password/', views.change_password, name='change_password'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('post/<int:pk>/edit/', views.edit_post, name='edit_post'),
 ]

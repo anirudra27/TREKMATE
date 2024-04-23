@@ -70,6 +70,13 @@ def user_logout(request):
     logout(request)
     return redirect("home")
 
+
+def user_dashboard(request):
+    user = request.user
+
+    if request.method == 'POST':
+
+        return render(request, 'user_dashboard.html', {'user': user})
     
 @login_required
 def dashboard(request):
@@ -93,14 +100,12 @@ def change_password(request):
 def edit_profile(request):
     if request.method == 'POST':
         username = request.POST['username']
-        email = request.POST['email']
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         
         # Update user information
         user = request.user
         user.username = username
-        user.email = email
         user.first_name = first_name
         user.last_name = last_name
         user.save()
@@ -112,23 +117,7 @@ def edit_profile(request):
 def homepage(request):
     return render(request, 'Trekmate/home.html')
 
-def destination(request):
-    itineraries = Itinerary.objects.all()
-    return render(request, 'Trekmate/destination.html', {'itineraries': itineraries})
 
-def recommend_destination(request):
-    if request.method == 'POST':
-        form = DestinationForm(request.POST)
-        if form.is_valid():
-            season = form.cleaned_data['season']
-            duration = form.cleaned_data['duration']
-            cost = form.cleaned_data['cost']
-
-            destinations = Itinerary.objects.filter(season=season, duration__lte=duration, cost=cost)
-            return render(request, 'Trekmate/recommend.html', {'form': form, 'destinations': destinations})
-    else:
-        form = DestinationForm()
-    return render(request, 'Trekmate/recommend.html', {'form': form})
 
 def post_list(request):
     posts = Post.objects.all() 
@@ -154,6 +143,29 @@ def post_detail(request, id):
     post = get_object_or_404(Post, id=id)
     return render(request, 'Trekmate/post_detail.html', {'post': post})
 
+def recommend_destination(request):
+    if request.method == 'POST':
+        form = DestinationForm(request.POST)
+        if form.is_valid():
+            season = form.cleaned_data['season']
+            duration = form.cleaned_data['duration']
+            cost = form.cleaned_data['cost']
+
+            destinations = Itinerary.objects.filter(season=season, duration__lte=duration, cost=cost)
+            return render(request, 'Trekmate/recommend.html', {'form': form, 'destinations': destinations})
+    else:
+        form = DestinationForm()
+    return render(request, 'Trekmate/recommend.html', {'form': form})
+
+def destination(request):
+    itineraries = Itinerary.objects.all()
+    return render(request, 'Trekmate/destination.html', {'itineraries': itineraries})
+
+def itinerary_detail(request, i_id):
+    itinerary = get_object_or_404(Itinerary, i_id=i_id)
+    return render(request, 'Trekmate/itinerary_detail.html', {'itinerary': itinerary})
+
+
 def edit_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
@@ -171,11 +183,6 @@ def delete_post(request, pk):
         post.delete()
         return HttpResponseRedirect(reverse('post_list'))
     return render(request, 'delete_post.html', {'post': post})
-
-def itinerary_detail(request, i_id):
-    itinerary = get_object_or_404(Itinerary, i_id=i_id)
-    return render(request, 'Trekmate/itinerary_detail.html', {'itinerary': itinerary})
-
 
 def shop(request):
 	if request.user.is_authenticated:
@@ -198,15 +205,6 @@ def cart(request):
     items = order.orderitem_set.all()
     context = {'items': items, 'order': order}
     return render(request, 'Trekmate/cart.html', context)
-
-
-def checkout(request):
-    user = request.user
-    order, created = Order.objects.get_or_create(user=user, complete=False)
-    items = order.orderitem_set.all()
-    context = {'items': items, 'order': order}
-    return render(request, 'Trekmate/checkout.html', context)
-
 
 def updateItem(request):
 	data = json.loads(request.body)
@@ -232,6 +230,15 @@ def updateItem(request):
 		orderItem.delete()
 
 	return JsonResponse('Item was added', safe=False)
+
+def checkout(request):
+    user = request.user
+    order, created = Order.objects.get_or_create(user=user, complete=False)
+    items = order.orderitem_set.all()
+    context = {'items': items, 'order': order}
+    return render(request, 'Trekmate/checkout.html', context)
+
+
 
 def processOrder(request):
     if request.method == 'POST':

@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{% static 'itinerary.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-NXnhv5/0f3QBgQDoRYwhaRJR6d44UnVXCeU3+5lAT47AaO7Y5wPe6SNtz/Bn04QTymBt02zDe9WPnDhZP03N3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/itinerary.js' %}"></script>
 </head>
 <body>
 <div class="itinerary-container">
@@ -39,22 +40,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-    document.getElementById("itineraryTab").click();
-</script>
 </body>
 {% endblock %}

@@ -4,6 +4,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'destination.css' %}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/destination.js' %}"></script>
 </head>
 <body>
         <div class="destination-container">
@@ -30,16 +31,6 @@
 </body>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const lookNowButtons = document.querySelectorAll(".look-now");
-        lookNowButtons.forEach(function(button) {
-            button.addEventListener("click", function(event) {
-                event.preventDefault();
-                const itineraryId = this.getAttribute("data-itinerary-id");
-                const itineraryDetailURL = `/itinerary/${itineraryId}/`;
-                window.location.href = itineraryDetailURL;
-            });
-        });
-    });
+ 
 </script>
 {% endblock %}

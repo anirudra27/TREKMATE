@@ -84,6 +84,19 @@ class DestinationForm(forms.Form):
     cost = forms.CharField(max_length=50)
     difficulty = forms.ChoiceField(choices=DIFFICULTY_CHOICES, label='Difficulty')
 
+    def clean(self):
+        cleaned_data = super().clean()
+        duration = cleaned_data.get('duration')
+        season = cleaned_data.get('season')
+        cost = cleaned_data.get('cost')
+        difficulty = cleaned_data.get('difficulty')
+
+        if not duration or not season or not cost or not difficulty:
+            raise forms.ValidationError("All fields are required.")
+
+        return cleaned_data
+
+
 class EditProfileForm(forms.ModelForm):
     password = forms.CharField(label='Current Password', widget=forms.PasswordInput)
     new_password = forms.CharField(label='New Password', widget=forms.PasswordInput, required=False)
@@ -91,7 +104,7 @@ class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['username', 'first_name', 'last_name']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -106,3 +119,5 @@ class EditProfileForm(forms.ModelForm):
             raise forms.ValidationError('New passwords do not match.')
 
         return cleaned_data
+    
+    
